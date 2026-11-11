@@ -1,5 +1,16 @@
 # 新增测试
 
+## 桌面登录流程与真实接口契约
+
+```powershell
+python -B new/tests/run_tests.py
+python -B new/run.py --mode mock --smoke
+```
+
+`test_login.py` 在回环地址运行助手、NMR 接口替身和样例业务，通过 HTTP/TCP 验证正常登录和拒绝路径；不访问真实管理平台、不尝试真实 PIN。测试原理与边界见 [真实适配](../docs/真实适配.md)，汇总写到 `new/.runtime/login-tests.json`。
+
+图形实验：`python -B new/run.py --mode mock`。仅模拟 PIN 为 `123456`，业务账号密码为 `alice` / `demo-password`。不要向真实设备尝试此模拟 PIN。
+
 ## Java 8 设备识别探测
 
 在工作目录根路径打开 PowerShell，保持云密 UKey 助手运行且插入设备：

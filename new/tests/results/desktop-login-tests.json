@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-11-11T09:53:42.349706+00:00",
+  "tests_run": 37,
+  "failures": 0,
+  "errors": 0,
+  "successful": true,
+  "physical_ukey_signing_tested": false,
+  "management_mode": "simulated; real NMR adapter tested against a local contract fixture",
+  "gui_tested_by_this_runner": false,
+  "known_gaps": [
+    "Original sample business port remains directly reachable.",
+    "Local HTTP endpoints do not identify the OS process or user.",
+    "Mock HMAC is not SM2 and does not prove real UKey interoperability."
+  ]
+}
