@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-11-11T16:26:38.6572173+08:00",
+  "cs_required_java": 17,
+  "cs_build_java": "21.0.10",
+  "default_java": "1.8.0_504",
+  "build_success": true,
+  "tests_run": 37,
+  "test_failures": 0,
+  "test_errors": 0,
+  "native_cs_smoke_passed": true,
+  "java8_helper_http_status": 200,
+  "device_detected": true,
+  "device_label": "HaiKey",
+  "physical_ukey_signing_tested": false,
+  "physical_ukey_integrated_in_cs": false,
+  "real_business_adapted": false,
+  "evidence": [
+    "product/.runtime/environment-build-test.log",
+    "product/access-server/target/surefire-reports/",
+    "product/.runtime/demo/smoke-result.json",
+    "product/.runtime/environment-check/java8-device-probe.txt"
+  ]
+}

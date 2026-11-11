@@ -1,0 +1,10 @@
+artifacts/
+evidence/
+tmp/
+validation/
+**/target/
+product/.runtime/
+product/dist/
+**/__pycache__/
+*.log
+.DS_Store

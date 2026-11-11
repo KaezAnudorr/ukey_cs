@@ -1,0 +1,44 @@
+{
+  "mode": "DEMO",
+  "physical_ukey": false,
+  "all_checks_matched": true,
+  "known_gap": "Original business port permits direct access; no OS process isolation on Agent entry",
+  "cases": [
+    {
+      "case": "No Agent: protected entry unavailable",
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Xms32m -Xmx256m -XX:+UseSerialGC\nCLIENT FAILED: Connection refused: getsockopt\n"
+    },
+    {
+      "case": "Authorized Alice: login and business requests",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "OK alice\nUSER alice\nNative C/S flow completed without browser\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Xms32m -Xmx256m -XX:+UseSerialGC\n"
+    },
+    {
+      "case": "Alice identity cannot login as Bob",
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Xms32m -Xmx256m -XX:+UseSerialGC\nCLIENT FAILED: Business login refused: ERR ACCOUNT_DENIED\n"
+    },
+    {
+      "case": "Known gap: original business port is still directly reachable",
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "OK alice\nUSER alice\nNative C/S flow completed without browser\n",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Xms32m -Xmx256m -XX:+UseSerialGC\n"
+    },
+    {
+      "case": "After disconnect: protected entry unavailable",
+      "passed": true,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "Picked up JAVA_TOOL_OPTIONS: -Xms32m -Xmx256m -XX:+UseSerialGC\nCLIENT FAILED: Connection refused: getsockopt\n"
+    }
+  ],
+  "owned_processes_stopped": true
+}
