@@ -14,9 +14,9 @@
   "negative_checks": null,
   "certificate_trust": "exact certificate pinned for this test; CA chain not validated",
   "nmr_publication_complete": false,
-  "outcome": "waiting_for_user_pin",
+  "outcome": "login_failed",
   "business_attempts": 0,
-  "checked_at": "2026-11-12T10:23:45.224312+08:00",
+  "checked_at": "2026-11-12T10:39:19.333737+08:00",
   "helper_read_only_endpoints_verified": [
     "/sys/getDevInfo",
     "/sys/getCertinfo",
@@ -32,5 +32,13 @@
     "raw_valid": true,
     "tampered_rejected": true
   },
-  "hardware_signature_acceptance": "pending user PIN; independent of software-key self-test"
+  "hardware_signature_acceptance": "not completed; owner must confirm correct PIN before any further attempt",
+  "failure_phase": "helper_pin_verification_rejected",
+  "failure_evidence": "Desktop displayed PIN verification failure; independent verifier not reached.",
+  "pin_retry_status": {
+    "maximum": 12,
+    "remaining_at_baseline": 12,
+    "remaining_after_user_operation": 10
+  },
+  "readback_at": "2026-11-12T10:41:21.473359+08:00"
 }

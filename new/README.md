@@ -18,6 +18,8 @@ python -B new/run.py --mode hardware-local --check-hardware --java-home D:\Code\
 
 当前已确认真实设备、证书和独立验签程序就绪；实际硬件签名结果需本人在窗口输入 PIN 后读取 `new/.runtime/hardware/result.json`。证书只按本次读取的精确内容固定，不代表完成 CA 信任链或吊销检查。若其他机器的 JAR 或 JDK 路径不同，可用 `--jar`、`--java-home` 指定。
 
+2026-11-12 本人操作的实际结果：助手拒绝 PIN 验证，业务请求数为 0，尚未完成签名验签；只读查询剩余次数为 10/12。**先由持有人确认正确 PIN，不要连续试错。** 详情见 [验证记录](docs/验证记录.md)。
+
 ## 全模拟体验
 
 在项目根目录执行：
