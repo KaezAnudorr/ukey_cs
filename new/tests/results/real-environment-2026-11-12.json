@@ -10,13 +10,15 @@
     "public_key_algorithm": "EC",
     "not_after_epoch_ms": 1823408654000
   },
-  "real_signature_verified": null,
-  "negative_checks": null,
+  "real_signature_verified": true,
+  "negative_checks": {
+    "changed_original_rejected": true
+  },
   "certificate_trust": "exact certificate pinned for this test; CA chain not validated",
   "nmr_publication_complete": false,
-  "outcome": "login_failed",
-  "business_attempts": 0,
-  "checked_at": "2026-11-12T10:39:19.333737+08:00",
+  "outcome": "business_login_succeeded",
+  "business_attempts": 1,
+  "checked_at": "2026-11-12T11:14:24.720632+08:00",
   "helper_read_only_endpoints_verified": [
     "/sys/getDevInfo",
     "/sys/getCertinfo",
@@ -32,13 +34,20 @@
     "raw_valid": true,
     "tampered_rejected": true
   },
-  "hardware_signature_acceptance": "not completed; owner must confirm correct PIN before any further attempt",
-  "failure_phase": "helper_pin_verification_rejected",
-  "failure_evidence": "Desktop displayed PIN verification failure; independent verifier not reached.",
-  "pin_retry_status": {
-    "maximum": 12,
-    "remaining_at_baseline": 12,
-    "remaining_after_user_operation": 10
-  },
-  "readback_at": "2026-11-12T10:41:21.473359+08:00"
+  "hardware_signature_acceptance": "passed: real device signature verified; changed original rejected; sample business login succeeded",
+  "readback_at": "2026-11-12T11:15:58.110749+08:00",
+  "physical_ukey_signing_tested": true,
+  "earlier_rejected_attempt": {
+    "checked_at": "2026-11-12T10:39:19.333737+08:00",
+    "outcome": "login_failed",
+    "business_attempts": 0,
+    "real_signature_verified": null,
+    "failure_phase": "helper_pin_verification_rejected",
+    "failure_evidence": "Desktop displayed PIN verification failure; independent verifier not reached.",
+    "pin_retry_status": {
+      "maximum": 12,
+      "remaining_at_baseline": 12,
+      "remaining_after_user_operation": 10
+    }
+  }
 }
