@@ -1,5 +1,25 @@
 # 桌面点击登录，先验证 UKey 再继续业务
 
+## 用当前真实设备测试（不依赖管理平台发布）
+
+```powershell
+python -B new/run.py --mode hardware-local --java-home D:\Code\Language\Jdk_8
+```
+
+此模式调用现有云密助手和真实 UKey，读取设备证书，并用原网页登录插件 JAR 内的 Bouncy Castle 密码库独立验签。仅管理配置使用本地测试绑定：`alice` 绑定本次读取的设备和证书；随机挑战由新本地服务生成，业务仍为本机样例。
+
+保留预填的 `alice` / `demo-password`，点击“登录并验证 UKey”，由设备持有人在本机弹窗输入自己的正确 PIN。**不要使用模拟 PIN，不在聊天中提供 PIN，不自动尝试错误 PIN。** 验签通过后还会离线检查篡改原文必须被拒绝，再继续样例业务登录。
+
+只读检查和密码库自测（不校验 PIN、不签名）：
+
+```powershell
+python -B new/run.py --mode hardware-local --check-hardware --java-home D:\Code\Language\Jdk_8
+```
+
+当前已确认真实设备、证书和独立验签程序就绪；实际硬件签名结果需本人在窗口输入 PIN 后读取 `new/.runtime/hardware/result.json`。证书只按本次读取的精确内容固定，不代表完成 CA 信任链或吊销检查。若其他机器的 JAR 或 JDK 路径不同，可用 `--jar`、`--java-home` 指定。
+
+## 全模拟体验
+
 在项目根目录执行：
 
 ```powershell
@@ -8,7 +28,7 @@ python -B new/run.py --mode mock
 
 窗口中的业务账号和密码预填为 `alice` / `demo-password`。点击“登录并验证 UKey”后，原业务登录暂停，弹出安全认证窗口；输入**仅用于模拟的 PIN `123456`**，认证通过后才提交业务登录。取消、错误 PIN 或验签失败都会停止本次登录。
 
-全模拟模式不访问现有管理平台、不调用真实 UKey，也不会尝试真实设备的 PIN。新实验使用 Python 3.10+ 标准库与 Tkinter，不依赖 Java 或额外 pip 包；旧 Java DEMO 的 Java 17+ 要求没有改变。
+全模拟模式不访问现有管理平台、不调用真实 UKey，也不会尝试真实设备的 PIN。桌面端使用 Python 3.10+ 标准库与 Tkinter；全模拟模式不依赖 Java，真实硬件本地验签模式复用已有 JDK 8+ 和原 JAR 的密码库，无需额外 pip 包。旧 Java DEMO 的 Java 17+ 要求没有改变。
 
 ## 一键测试
 
@@ -37,7 +57,7 @@ python -B new/run.py --mode nmr --nmr-url http://127.0.0.1:9191 --helper-url htt
 
 此模式调用现有助手和 NMR 接口，PIN 只发送到本机助手；它仍连接本次新建的本机样例业务，不接入现网业务。NMR 缺配置、504、验签失败或设备不可用时阻止登录，**不会退回模拟模式**。自动 smoke 禁止在真实模式运行。
 
-管理平台发布仍未完成，因此**真实 UKey 签名、密码服务验签和实际平台配置联调尚未通过**。这轮验证确认的是模拟完整流程、真实适配的接口契约，以及真实助手的只读设备识别。不能把全模拟模式与真实助手直接混用并将任意签名视作通过；使用真实设备做离线验签还需其签名证书和经验证的 SM2 验签实现。
+管理平台发布仍未完成，因此**NMR 密码服务验签和实际平台配置联调尚未通过**。`hardware-local` 可独立验证真实设备签名，不会宣称 NMR 已发布或现网密码服务已验签成功；其实际签名结果以本人 PIN 操作后的记录为准。不能把全模拟模式与真实助手混用并将任意签名视作通过。
 
 详见 [真实适配与测试边界](docs/真实适配.md)。
 
@@ -49,6 +69,7 @@ python -B new/run.py --mode nmr --nmr-url http://127.0.0.1:9191 --helper-url htt
 | `src/desktop.py` | 新增原生桌面样例与 PIN 窗口 |
 | `src/workflow.py` | 暂停登录、调用助手、证明认证、继续业务登录 |
 | `src/adapters.py` | 云密助手与 NMR 真实 HTTP 适配、模拟管理配置与模拟验签 |
+| `src/hardware.py`、`src/java/HardwareVerifier.java` | 真实设备本地绑定、复用原 JAR 密码库的独立 SM2 验签 |
 | `src/service.py` | 本次登录挑战、一次性授权和独立 TCP 样例业务 |
 | `src/mock_helper.py` | 仅模拟模式使用的助手协议替身 |
 | `src/runtime.py` | 本次创建服务的启动/停止，不占用旧插件端口 |

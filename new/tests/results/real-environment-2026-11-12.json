@@ -1,0 +1,36 @@
+{
+  "mode": "hardware-local",
+  "management_configuration": "local-test-rule",
+  "physical_device_detected": true,
+  "certificate_read_from_helper": true,
+  "jar_crypto_library_used": "bcprov-jdk15on-1.69",
+  "certificate": {
+    "certificate_valid_now": true,
+    "signature_algorithm": "SM3WITHSM2",
+    "public_key_algorithm": "EC",
+    "not_after_epoch_ms": 1823408654000
+  },
+  "real_signature_verified": null,
+  "negative_checks": null,
+  "certificate_trust": "exact certificate pinned for this test; CA chain not validated",
+  "nmr_publication_complete": false,
+  "outcome": "waiting_for_user_pin",
+  "business_attempts": 0,
+  "checked_at": "2026-11-12T10:23:45.224312+08:00",
+  "helper_read_only_endpoints_verified": [
+    "/sys/getDevInfo",
+    "/sys/getCertinfo",
+    "/sys/getPublicKeyinfo",
+    "/sys/getPinInfo"
+  ],
+  "certificate_der_bytes": 1048,
+  "nmr_http_port": 9191,
+  "nmr_account_probe_result": false,
+  "external_platform_config_present": false,
+  "verifier_self_test": {
+    "der_valid": true,
+    "raw_valid": true,
+    "tampered_rejected": true
+  },
+  "hardware_signature_acceptance": "pending user PIN; independent of software-key self-test"
+}

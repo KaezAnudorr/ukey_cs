@@ -1,4 +1,6 @@
 """网页插件接口的桌面适配；模拟与真实模式由启动参数显式选择。"""
+import base64
+import binascii
 import hashlib
 import hmac
 import json
@@ -64,6 +66,16 @@ class UkeyHelper:
         if not isinstance(info, dict) or info.get('code') != 200 or not info.get('SerialNumber'):
             raise LoginError('未识别到 UKey，请插入设备并检查助手')
         return info['SerialNumber']
+
+    def certificate(self):
+        # 此只读路径已从当前助手可执行文件的路由字符串及实际响应核实。
+        info = self.http.json('POST', '/sys/getCertinfo', {}, form=True)
+        if not isinstance(info, dict) or info.get('code') != 200 or not isinstance(info.get('Certinfo'), str):
+            raise LoginError('无法从助手读取签名证书')
+        try:
+            return base64.b64decode(info['Certinfo'], validate=True)
+        except (ValueError, binascii.Error):
+            raise LoginError('助手返回的证书不是有效 Base64') from None
 
     def sign(self, pin, original_text, serial_number):
         result = self.http.json('POST', '/sys/verifyPin', {'pin': pin}, form=True)

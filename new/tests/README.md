@@ -1,5 +1,16 @@
 # 新增测试
 
+## 真实设备与原 JAR 密码库
+
+```powershell
+python -B new/run.py --mode hardware-local --check-hardware --java-home D:\Code\Language\Jdk_8
+python -B new/run.py --mode hardware-local --java-home D:\Code\Language\Jdk_8
+```
+
+第一条只读证书并自测独立验签程序，不调用真实 PIN/签名；第二条打开真实设备登录窗口，由本人输入正确 PIN。不要使用全模拟模式的 PIN。
+
+`test_hardware.py` 的 9 项自动测试核对证书读取契约、编码错误、精确证书绑定与拒绝条件，使用替身，不算硬件签名。真实结果只取本机 `new/.runtime/hardware/result.json`，不上传其中的证书文件或任何真实 PIN。
+
 ## 桌面登录流程与真实接口契约
 
 ```powershell

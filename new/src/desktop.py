@@ -32,9 +32,10 @@ class Desktop:
         body = ttk.Frame(self.root, padding=32)
         body.pack(fill='both', expand=True)
         ttk.Label(body, text='业务登录', style='Title.TLabel').pack(anchor='w')
-        mode_text = ('全模拟实验 · 不调用真实 UKey，不连接管理平台' if runtime.mode == 'mock'
-                     else '真实助手 + NMR · 业务仍是本机样例，不是现网系统')
-        ttk.Label(body, text=mode_text, style='State.TLabel').pack(anchor='w', pady=(8, 24))
+        mode_text = {'mock': '全模拟实验 · 不调用真实 UKey，不连接管理平台',
+                     'nmr': '真实助手 + NMR · 业务仍是本机样例，不是现网系统',
+                     'hardware-local': '真实 UKey + 原 JAR 密码库独立验签 · 管理规则使用本地测试绑定'}[runtime.mode]
+        ttk.Label(body, text=mode_text, style='State.TLabel', wraplength=690).pack(anchor='w', pady=(8, 24))
         form = ttk.Frame(body)
         form.pack(fill='x')
         form.columnconfigure(1, weight=1)
@@ -142,14 +143,17 @@ class Desktop:
             if kind == 'prepared':
                 self.show_pin(result)
             elif kind == 'finished':
+                self.runtime.record_result('business_login_succeeded')
                 self.status.set('登录成功：' + result['user'] + '。认证通过后才执行了原业务密码校验。')
                 self.steps.set('设备已读取 → PIN 与签名通过 → 服务端验签通过 → 业务登录成功')
                 self.reset()
             elif kind == 'cancelled':
+                self.runtime.record_result('cancelled_without_business_login')
                 self.status.set('已取消本次登录，没有向业务系统提交账号密码。')
                 self.steps.set('本次挑战已撤销；重新点击登录将生成新挑战。')
                 self.reset()
             else:
+                self.runtime.record_result('login_failed')
                 self.status.set('登录已停止：' + result)
                 self.steps.set('不会绕过认证，也不会自动改用模拟模式。')
                 self.reset()
